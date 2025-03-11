@@ -1,15 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { LucideShoppingBasket, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { addToCart } from "@/services/apiUserCart";
 import Image from "next/image";
+import { CartContext } from "@/context/CartContext";
 
 const CollectionSection = ({ store }) => {
   const [collectionItemList, setCollectionItemList] = useState([]);
+  const { updateCart, setUpdateCart } = useContext(CartContext);
   const { user } = useUser();
+
+  // console.log("loop...");
 
   const filterCollection = (category) => {
     const result = store?.collection.filter(
@@ -19,7 +23,8 @@ const CollectionSection = ({ store }) => {
   };
 
   const addToCartHandler = async (item) => {
-    // console.log("item", item);
+    if (user === undefined) return;
+
     try {
       toast("Adding to Cart", {
         action: {
@@ -34,9 +39,8 @@ const CollectionSection = ({ store }) => {
         price: item?.price,
       };
 
-      // console.log("data", data);
-
       const res = await addToCart(data);
+      setUpdateCart((prev) => !prev);
       console.log("res", res);
     } catch (error) {
       console.error(error);

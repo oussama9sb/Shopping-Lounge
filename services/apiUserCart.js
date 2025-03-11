@@ -16,3 +16,16 @@ export async function addToCart(item) {
 
   return data;
 }
+
+// Read All Rows
+
+export async function getUserCart() {
+  const { data, error } = await supabase.from("userCart").select("*");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Error user cart can not be loaded.");
+  }
+
+  return data;
+}

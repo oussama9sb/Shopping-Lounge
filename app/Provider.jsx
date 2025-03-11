@@ -1,17 +1,20 @@
 "use client";
 
 import { Suspense } from "react";
-import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/sonner";
+import { CartContextProvider } from "@/context/CartContext";
+import Header from "@/components/Header";
 
 const Provider = ({ children }) => {
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header />
-        <Toaster />
-        {children}
-      </Suspense>
+      <CartContextProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header />
+          <Toaster />
+          {children}
+        </Suspense>
+      </CartContextProvider>
     </>
   );
 };

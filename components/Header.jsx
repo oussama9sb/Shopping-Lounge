@@ -1,5 +1,6 @@
 "use client";
 
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, ShoppingBasket } from "lucide-react";
@@ -20,11 +21,24 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { CartContext } from "@/context/CartContext";
+import { getUserCart } from "@/services/apiUserCart";
 
 const Header = () => {
   const { isSignedIn, user, isLoaded } = useUser();
+  const { updateCart, setUpdateCart } = useContext(CartContext);
 
-  // console.log(user);
+  useEffect(() => {
+    try {
+      async function getUpdatedCart() {
+        const data = await getUserCart();
+        setUpdateCart(data);
+      }
+      user && getUpdatedCart();
+    } catch (error) {
+      console.error(error);
+    }
+  }, [updateCart, setUpdateCart, user]);
 
   if (!isLoaded) {
     return (
