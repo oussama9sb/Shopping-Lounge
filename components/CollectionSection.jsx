@@ -1,22 +1,46 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { LucideShoppingBasket, Minus, Plus, ShoppingCart } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
+import { addToCart } from "@/services/apiUserCart";
 import Image from "next/image";
-import { LucideShoppingBasket, Minus, Plus } from "lucide-react";
 
 const CollectionSection = ({ store }) => {
   const [collectionItemList, setCollectionItemList] = useState([]);
-
-  console.log("colletionSection", store);
-
-  console.log("collecitonItemList", collectionItemList);
+  const { user } = useUser();
 
   const filterCollection = (category) => {
-    const result = store?.collection?.filter(
+    const result = store?.collection.filter(
       (item) => item.category === category,
     );
-    // console.log("result", result[0].category);
     setCollectionItemList(result[0]);
+  };
+
+  const addToCartHandler = async (item) => {
+    // console.log("item", item);
+    try {
+      toast("Adding to Cart", {
+        action: {
+          label: <ShoppingCart size={17} />,
+        },
+      });
+      const data = {
+        email: user?.primaryEmailAddress.emailAddress,
+        productName: item?.name,
+        productDescription: item?.description,
+        productImage: item?.productImage.url,
+        price: item?.price,
+      };
+
+      // console.log("data", data);
+
+      const res = await addToCart(data);
+      console.log("res", res);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -69,6 +93,7 @@ const CollectionSection = ({ store }) => {
                   </div>
                   <LucideShoppingBasket
                     size={31}
+                    onClick={() => addToCartHandler(item)}
                     className="bg-yellow-400 rounded-full py-1 cursor-pointer"
                   />
                 </div>

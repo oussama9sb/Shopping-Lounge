@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import Image from "next/image";
+import { Search, ShoppingBasket } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -13,10 +13,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+  useUser,
+} from "@clerk/nextjs";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 const Header = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { isSignedIn, user, isLoaded } = useUser();
+
+  // console.log(user);
+
+  if (!isLoaded) {
+    return (
+      <div className="w-full flex justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className=" h-12 flex justify-between items-center">
@@ -40,17 +56,38 @@ const Header = () => {
       </div>
       {/* User Profile and Button */}
       {isSignedIn ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-8 items-center relative">
+          <div className="flex gap-2 items-center cursor-pointer bg-white p-2 rounded-full">
+            <ShoppingBasket size={27} />
+          </div>
+          <span className="absolute top-0 left-8  px-1 rounded-full bg-yellow-400 text-xs font-semibold">
+            0
+          </span>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Image
+                src={user?.imageUrl}
+                alt={user?.firstName}
+                width={41}
+                height={41}
+                className="rounded-full"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+              <DropdownMenuItem>
+                <SignOutButton>
+                  <Button>Sign out</Button>
+                </SignOutButton>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       ) : (
         <div className="w-[10rem] flex gap-2">
           <SignInButton mode="redirect">
@@ -61,9 +98,9 @@ const Header = () => {
               Login
             </Button>
           </SignInButton>
-          <SignInButton>
+          <SignUpButton>
             <Button className="flex rounded-full text-sm px-4">Sign Up</Button>
-          </SignInButton>
+          </SignUpButton>
         </div>
       )}
     </div>
