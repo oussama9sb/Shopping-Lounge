@@ -19,7 +19,7 @@ const StoreList = () => {
         const data = await getStore();
         setStoreList(data);
 
-        console.log("store", data);
+        // console.log("store", data);
       }
       const currentCategory = router.get("category") || "All";
       setCategory(currentCategory);

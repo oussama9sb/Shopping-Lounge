@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { LucideShoppingBasket, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
@@ -13,17 +13,22 @@ const CollectionSection = ({ store }) => {
   const { updateCart, setUpdateCart } = useContext(CartContext);
   const { user } = useUser();
 
-  // console.log("loop...");
+  const filterCollection = useCallback(
+    (category) => {
+      const result = store?.collection.filter(
+        (item) => item.category === category,
+      );
+      setCollectionItemList(result[0]);
+    },
+    [store?.collection],
+  );
 
-  const filterCollection = (category) => {
-    const result = store?.collection.filter(
-      (item) => item.category === category,
-    );
-    setCollectionItemList(result[0]);
-  };
+  useEffect(() => {
+    store?.collection && filterCollection(store?.collection[0]?.category);
+  }, [filterCollection, store?.collection]);
 
   const addToCartHandler = async (item) => {
-    if (user === undefined) return;
+    if (user === null) return;
 
     try {
       toast("Adding to Cart", {
@@ -37,6 +42,8 @@ const CollectionSection = ({ store }) => {
         productDescription: item?.description,
         productImage: item?.productImage.url,
         price: item?.price,
+        storeSlug: store?.storeSlug,
+        storeName: store?.storeName,
       };
 
       const res = await addToCart(data);
@@ -46,10 +53,6 @@ const CollectionSection = ({ store }) => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    store?.collection && filterCollection(store?.collection[0]?.category);
-  }, []);
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-4 mt-6">

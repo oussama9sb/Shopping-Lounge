@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, ShoppingBasket } from "lucide-react";
@@ -15,38 +15,41 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import {
   SignInButton,
   SignOutButton,
   SignUpButton,
   useUser,
 } from "@clerk/nextjs";
+
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CartContext } from "@/context/CartContext";
 import { getUserCart } from "@/services/apiUserCart";
+import Cart from "./Cart";
 
 const Header = () => {
-  const { isSignedIn, user, isLoaded } = useUser();
-  const { updateCart, setUpdateCart } = useContext(CartContext);
+  const { isSignedIn, user } = useUser();
+  const { updateCart } = useContext(CartContext);
+  const [cart, setCart] = useState([]);
+
+  // console.log("cart", cart);
 
   useEffect(() => {
     try {
       async function getUpdatedCart() {
         const data = await getUserCart();
-        setUpdateCart(data);
+        setCart(data);
       }
       user && getUpdatedCart();
     } catch (error) {
       console.error(error);
     }
-  }, [updateCart, setUpdateCart, user]);
-
-  if (!isLoaded) {
-    return (
-      <div className="w-full flex justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  }, [updateCart, user]);
 
   return (
     <div className=" h-12 flex justify-between items-center">
@@ -71,12 +74,20 @@ const Header = () => {
       {/* User Profile and Button */}
       {isSignedIn ? (
         <div className="flex gap-8 items-center relative">
-          <div className="flex gap-2 items-center cursor-pointer bg-white p-2 rounded-full">
-            <ShoppingBasket size={27} />
-          </div>
-          <span className="absolute top-0 left-8  px-1 rounded-full bg-yellow-400 text-xs font-semibold">
-            0
-          </span>
+          <Popover>
+            <PopoverTrigger>
+              <div className="flex gap-2 items-center cursor-pointer bg-white p-2 rounded-full">
+                <ShoppingBasket size={27} />
+              </div>
+              <span className="absolute top-0 left-8  px-1 rounded-full bg-yellow-400 text-xs font-semibold">
+                {cart?.length}
+              </span>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Cart cart={cart} />
+            </PopoverContent>
+          </Popover>
+
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Image
@@ -95,9 +106,7 @@ const Header = () => {
               <DropdownMenuItem>Team</DropdownMenuItem>
               <DropdownMenuItem>Subscription</DropdownMenuItem>
               <DropdownMenuItem>
-                <SignOutButton>
-                  <Button>Sign out</Button>
-                </SignOutButton>
+                <SignOutButton>Sign out</SignOutButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
