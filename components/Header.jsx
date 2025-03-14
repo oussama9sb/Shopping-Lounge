@@ -27,7 +27,6 @@ import {
   useUser,
 } from "@clerk/nextjs";
 
-import { LoadingSpinner } from "./LoadingSpinner";
 import { CartContext } from "@/context/CartContext";
 import { getUserCart } from "@/services/apiUserCart";
 import Cart from "./Cart";
@@ -36,8 +35,6 @@ const Header = () => {
   const { isSignedIn, user } = useUser();
   const { updateCart } = useContext(CartContext);
   const [cart, setCart] = useState([]);
-
-  // console.log("cart", cart);
 
   useEffect(() => {
     try {
@@ -83,7 +80,7 @@ const Header = () => {
                 {cart?.length}
               </span>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="mr-24 w-96">
               <Cart cart={cart} />
             </PopoverContent>
           </Popover>

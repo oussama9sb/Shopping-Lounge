@@ -29,3 +29,18 @@ export async function getUserCart() {
 
   return data;
 }
+
+//Delete A Row
+
+export async function deleteCartItem(id) {
+  const { error } = await supabase
+    .from("userCart")
+    .delete()
+    .eq("id", id)
+    .select();
+  if (error) {
+    console.error(error);
+    throw new Error("Error user cart item can not be deleted.");
+  }
+  toast("Item Removed");
+}

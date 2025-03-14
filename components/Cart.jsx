@@ -1,16 +1,27 @@
-import { X } from "lucide-react";
+"use client";
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+import { X } from "lucide-react";
 import { Button } from "./ui/button";
+import { deleteCartItem } from "@/services/apiUserCart";
+import { CartContext } from "@/context/CartContext";
 
 const Cart = ({ cart }) => {
-  console.log("Cart component", cart);
+  const { setUpdateCart } = useContext(CartContext);
 
   const CalculateCartAmount = () => {
     let total = 0;
     cart.forEach((item) => (total += item.price));
     return total.toFixed(2);
   };
+
+  async function handleDeleteCartItem(id) {
+    await deleteCartItem(id);
+    setUpdateCart((prev) => !prev);
+  }
+
   return (
     <div className="">
       <h4 className="text-2xl font-bold mb-5">{cart[0]?.storeName}</h4>
@@ -30,12 +41,17 @@ const Cart = ({ cart }) => {
             </div>
             <div className="flex items-center justify-between gap-2">
               <p className="text-sm text-gray-500">${item.price}</p>
-              <X size={17} color="red" className="cursor-pointer" />
+              <X
+                size={17}
+                color="red"
+                className="cursor-pointer"
+                onClick={() => handleDeleteCartItem(item.id)}
+              />
             </div>
           </div>
         ))}
         <Link href={"/"}>
-          <Button>
+          <Button className="mt-2">
             Checkout{" "}
             <span className="text-[13px] font-bold">
               ${CalculateCartAmount()}

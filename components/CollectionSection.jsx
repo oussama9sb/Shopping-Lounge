@@ -10,7 +10,7 @@ import { CartContext } from "@/context/CartContext";
 
 const CollectionSection = ({ store }) => {
   const [collectionItemList, setCollectionItemList] = useState([]);
-  const { updateCart, setUpdateCart } = useContext(CartContext);
+  const { setUpdateCart } = useContext(CartContext);
   const { user } = useUser();
 
   const filterCollection = useCallback(
@@ -48,7 +48,6 @@ const CollectionSection = ({ store }) => {
 
       const res = await addToCart(data);
       setUpdateCart((prev) => !prev);
-      console.log("res", res);
     } catch (error) {
       console.error(error);
     }
