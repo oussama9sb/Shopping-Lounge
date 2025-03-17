@@ -5,8 +5,8 @@ import { LucideShoppingBasket, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { addToCart } from "@/services/apiUserCart";
-import Image from "next/image";
 import { CartContext } from "@/context/CartContext";
+import Image from "next/image";
 
 const CollectionSection = ({ store }) => {
   const [collectionItemList, setCollectionItemList] = useState([]);
@@ -46,7 +46,7 @@ const CollectionSection = ({ store }) => {
         storeName: store?.storeName,
       };
 
-      const res = await addToCart(data);
+      await addToCart(data);
       setUpdateCart((prev) => !prev);
     } catch (error) {
       console.error(error);

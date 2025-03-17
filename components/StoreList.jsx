@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import StoreItem from "./StoreItem";
 import { getStore } from "@/services/apiStore";
 import { useSearchParams } from "next/navigation";
 import { LoadingSpinner } from "./LoadingSpinner";
+
+import StoreItem from "./StoreItem";
 
 const StoreList = () => {
   const [loading, setLoading] = useState(true);
