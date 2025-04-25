@@ -44,3 +44,14 @@ export async function deleteCartItem(id) {
   }
   toast("Item Removed");
 }
+
+//Delete All Rows
+
+export async function deleteAllCartItems(arr) {
+  const { error } = await supabase.from("userCart").delete().in("id", arr);
+  if (error) {
+    console.error(error);
+    throw new Error("Error user cart item can not be deleted.");
+  }
+  toast("Items purchased");
+}

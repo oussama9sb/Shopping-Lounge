@@ -2,9 +2,8 @@ import { Rating as ReactRating } from "@smastrom/react-rating";
 import Image from "next/image";
 
 const ReviewList = ({ reviewList }) => {
-  // console.log("ReviewList component", reviewList);
   return (
-    <div className="flex flex-col gap-5 bg-white px-4 py-6 rounded-md shadow-slate-900/5 shadow-md">
+    <div className="flex flex-col gap-5 bg-white px-4 py-6 rounded-md shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
       {reviewList.map((review, i) => (
         <div key={i} className="flex flex-col gap-2">
           <div className="flex items-center gap-4">

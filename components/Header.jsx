@@ -49,7 +49,7 @@ const Header = () => {
   }, [updateCart, user]);
 
   return (
-    <div className=" h-12 flex justify-between items-center">
+    <div className="h-12 max-w-[1440px] flex justify-between items-center m-auto pt-[1.5rem] mb-[1.7rem]">
       {/* logo */}
       <Link href={"/"} className="flex flex-col">
         <span className="text-xl uppercase font-bold leading-3">Shorpora</span>

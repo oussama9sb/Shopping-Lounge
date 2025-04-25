@@ -39,7 +39,6 @@ const ReviewSection = ({ store }) => {
         setReviewText("");
       }
       toast("Review added.");
-      // console.log("Review res", res);
       setUpdateCart((prev) => !prev);
     } catch (error) {
       console.error("Something went wrong handleSubmit:", error);
@@ -50,7 +49,6 @@ const ReviewSection = ({ store }) => {
     async function getReviewList() {
       const data = await getReviews();
       setReviewList(data);
-      // console.log("Review List", data);
     }
     store && getReviewList();
   }, [store, updateCart]);
@@ -58,7 +56,7 @@ const ReviewSection = ({ store }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-10 mt-10">
       {/* Post Review */}
-      <div className="flex flex-col items-start gap-2 h-[20rem] p-5 bg-white shadow-md shadow-slate-900/5 min-w-full rounded-sm">
+      <div className="flex flex-col items-start gap-2 h-[20rem] p-5 bg-white shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] min-w-full rounded-sm">
         <h4 className="text-xl text-zinc-800 font-bold">Add Your Review</h4>
         <ReactRating
           style={{ maxWidth: 100 }}

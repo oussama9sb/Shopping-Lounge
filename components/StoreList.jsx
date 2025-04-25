@@ -37,7 +37,7 @@ const StoreList = () => {
   const capitalized = word.charAt(0).toUpperCase() + word.slice(1);
 
   return (
-    <section className="mt-20">
+    <section className="max-w-[1440px] m-auto mt-20">
       <h2 className="text-3xl font-bold">
         Featured{" "}
         <span className="font-bold text-yellow-400">{capitalized} Stores</span>

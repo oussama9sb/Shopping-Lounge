@@ -4,7 +4,7 @@ import { Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="mt-20 px-20 py-20 bg-stone-900 rounded-t-md flex flex-col items-center">
+    <footer className="max-w-[1440px] m-auto mt-20 px-20 py-20 bg-stone-900 rounded-t-md flex flex-col items-center">
       <div className="rounded-md grid grid-rows-1 md:grid-rows-2 justify-items-center lg:flex">
         <Link
           href={"/"}

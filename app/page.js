@@ -1,4 +1,3 @@
-"use client";
 import CategoryList from "@/components/CategoryList";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";

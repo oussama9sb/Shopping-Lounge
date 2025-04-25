@@ -31,7 +31,7 @@ const CategoryList = () => {
   }, [router]);
 
   return (
-    <section className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 lg:flex lg:flex-row lg:justify-around mt-24">
+    <section className="max-w-[1440px] m-auto grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 lg:flex lg:flex-row lg:justify-around mt-24">
       {loading && (
         <div className="w-full flex justify-center">
           <LoadingSpinner />

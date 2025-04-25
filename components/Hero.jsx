@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section>
+    <section className="max-w-[1440px] m-auto">
       <div className="bg-hero bg-cover bg-center bg-no-repeat h-[772px] mt-3 rounded-xl">
         <div className="relative max-w-[785px] px-8 top-32 sm:top-60">
           <h2 className=" text-4xl md:text-6xl font-bold leading-tight">

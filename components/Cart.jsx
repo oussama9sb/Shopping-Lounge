@@ -23,7 +23,7 @@ const Cart = ({ cart }) => {
   }
 
   return (
-    <div className="">
+    <div>
       <h4 className="text-2xl font-bold mb-5">{cart[0]?.storeName}</h4>
       <div className="flex flex-col gap-2">
         <h5 className="font-semibold mb-1">My Order</h5>
@@ -50,9 +50,9 @@ const Cart = ({ cart }) => {
             </div>
           </div>
         ))}
-        <Link href={"/"}>
+        <Link href={`/checkout?store=${cart[0]?.storeName}`}>
           <Button className="mt-2">
-            Checkout{" "}
+            Checkout
             <span className="text-[13px] font-bold">
               ${CalculateCartAmount()}
             </span>
