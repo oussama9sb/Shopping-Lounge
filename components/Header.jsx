@@ -51,8 +51,10 @@ const Header = () => {
   return (
     <div className="h-12 max-w-[1440px] flex justify-between items-center m-auto pt-[1.5rem] mb-[1.7rem]">
       {/* logo */}
-      <Link href={"/"} className="flex flex-col">
-        <span className="text-xl uppercase font-bold leading-3">Shorpora</span>
+      <Link href={"/"} className="flex flex-col items-center">
+        <span className="text-xl uppercase font-bold leading-3">
+          Shopping-Lounge
+        </span>
         <span className="text-yellow-500 font-semibold text-xs uppercase tracking-[2.3px] mt-1">
           MarketPlace
         </span>

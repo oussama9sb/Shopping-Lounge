@@ -9,7 +9,7 @@ const Hero = () => {
           <h2 className=" text-4xl md:text-6xl font-bold leading-tight">
             Elevate your wardrobe with trendy fashion from{" "}
             <span className="bg-white px-4 inline-block mt-[3px] rounded-full">
-              Shopora
+              Shopping-Lounge
             </span>{" "}
           </h2>
           <div className="flex flex-col-reverse md:flex-row gap-8 mt-40">
